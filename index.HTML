@@ -9,6 +9,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap"
         rel="stylesheet">
+    <meta property="og:title" content="Convite: Maitê faz 12!">
+    <meta property="og:description" content="Confirme sua presença aqui!">
+    <meta property="og:image" content="https://seu-link.com/foto-convite.png">
     <title>Convite de Festa Maitê 12 anos</title>
     <style>
         * {
@@ -415,9 +418,9 @@
 
             const linkWhats = `https://wa.me/5521991259018?text=${encodeURIComponent(textoWhats)}`;
 
-         
-           
-                 // Envia para o Google Forms em segundo plano
+
+
+            // Envia para o Google Forms em segundo plano
             fetch(urlGoogle, { mode: 'no-cors' }).then(() => {
                 alert("Presença confirmada com sucesso!");
                 window.location.href = linkWhats; // Direciona para o WhatsApp após salvar
