@@ -403,39 +403,29 @@
                 return;
             }
 
-            // IDs do Google Forms — atualize cada par
-            // A primeira constante de cada grupo deve ser o ID do campo "Nome do convidado X"
-            // e a segunda constante deve ser o ID do campo "Idade do convidado X".
-            // Se no seu formulário os valores estiverem trocados (idade aparecendo na coluna de
-            // nome), basta inverter os dois valores abaixo. Você encontra o ID inspecionando o
-            // elemento <input> do formulário (procure por "entry." no atributo name).
+            // IDs do Google Forms — nomes existentes
             const formID = "1FAIpQLSd_qJlNE8bEy44lnzlYFVeL3JVdvBr-v2FVCcvybbb7kCqpkQ";
-            const entry_nome1 = "entry.2134929628";   // exemplo: campo "Nome 1"
-            const entry_idade1 = "entry.1266300583";  // exemplo: campo "Idade 1"
+            const entry_nome1 = "entry.2134929628";
+            const entry_nome2 = "entry.746945272";
+            const entry_nome3 = "entry.1516924380";
+            const entry_nome4 = "entry.1575603338";
 
-            const entry_nome2 = "entry.746945272";    // nome 2
-            const entry_idade2 = "entry.890342780";   // idade 2
-
-            const entry_nome3 = "entry.1516924380";   // nome 3
-            const entry_idade3 = "entry.903520774";   // idade 3
-
-            const entry_nome4 = "entry.1575603338";   // nome 4
-            const entry_idade4 = "entry.1437445319";  // idade 4
+            // ↓ Substitua pelos IDs reais dos novos campos "É criança?" que vai criar no Forms
+            const entry_idade1 = "entry.1266300583";
+            const entry_idade2 = "entry.890342780";
+            const entry_idade3 = "entry.903520774";
+            const entry_idade4 = "entry.1437445319";
 
             const urlGoogle = `https://docs.google.com/forms/d/e/${formID}/formResponse?`
                 + `${entry_nome1}=${encodeURIComponent(nome1)}`
-                + `&${entry_idade1}=${encodeURIComponent(idade1)}`  // ordem não importa na URL,
-                                                                 // só cada par precisa estar correto
                 + `&${entry_nome2}=${encodeURIComponent(nome2)}`
-                + `&${entry_idade2}=${encodeURIComponent(idade2)}`
                 + `&${entry_nome3}=${encodeURIComponent(nome3)}`
-                + `&${entry_idade3}=${encodeURIComponent(idade3)}`
                 + `&${entry_nome4}=${encodeURIComponent(nome4)}`
+                + `&${entry_idade1}=${encodeURIComponent(idade1)}`
+                + `&${entry_idade2}=${encodeURIComponent(idade2)}`
+                + `&${entry_idade3}=${encodeURIComponent(idade3)}`
                 + `&${entry_idade4}=${encodeURIComponent(idade4)}`
                 + `&submit=Submit`;
-
-            // DEBUG: mostra a URL montada no console para inspecionar os pares
-            console.log('Google form URL:', urlGoogle);
 
             // Monta mensagem do WhatsApp — linha por convidado
             function linha(nome, idade) {
