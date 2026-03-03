@@ -332,7 +332,7 @@
                     <label for="nome-convidado_2">Convidado 2:</label>
                     <input type="text" id="nome-convidado_2" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                         <input type="number" class="input-idade" id="idade2" placeholder="Idade" min="1" max="99" />
+                        <input type="number" class="input-idade" id="idade2" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -340,7 +340,7 @@
                     <label for="nome-convidado_3">Convidado 3:</label>
                     <input type="text" id="nome-convidado_3" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                         <input type="number" class="input-idade" id="idade3" placeholder="Idade" min="1" max="99" />
+                        <input type="number" class="input-idade" id="idade3" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -348,7 +348,7 @@
                     <label for="nome-convidado_4">Convidado 4:</label>
                     <input type="text" id="nome-convidado_4" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                         <input type="number" class="input-idade" id="idade4" placeholder="Idade" min="1" max="99" />
+                        <input type="number" class="input-idade" id="idade4" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -377,79 +377,79 @@
 
     <script>
         // ================================================
-        // LÓGICA DOS BOTÕES SIM / NÃO
-        // Guarda se cada convidado é criança ou não
+        // LÓGICA DOS BOTÕES DE IDADE
+        // Guardar as idades das pessoas para enviar ao Google Forms
         // ================================================
-        const respostas = { crianca1: "", crianca2: "", crianca3: "", crianca4: "" };
 
-        document.querySelectorAll('.btn-crianca').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                const alvo = btn.dataset.alvo;
-                const grupo = btn.closest('.grupo-crianca');
-
-                // Remove .ativo dos dois botões do par
-                grupo.querySelectorAll('.btn-crianca').forEach(b => b.classList.remove('ativo'));
-
-                // Marca o clicado como ativo
-                btn.classList.add('ativo');
-
-                // Salva a resposta
-                respostas[alvo] = btn.classList.contains('sim') ? "Sim" : "Não";
-            });
-        });
 
         // ================================================
         // BOTÃO CONFIRMAR
         // ================================================
         document.getElementById('btn-confirmar').addEventListener('click', function () {
 
+            const idade1 = document.getElementById('idade1').value.trim();
+            const idade2 = document.getElementById('idade2').value.trim();
+            const idade3 = document.getElementById('idade3').value.trim();
+            const idade4 = document.getElementById('idade4').value.trim();
+
+            // Ler também os nomes (evita ReferenceError se usados abaixo)
             const nome1 = document.getElementById('nome-convidado').value.trim();
             const nome2 = document.getElementById('nome-convidado_2').value.trim();
             const nome3 = document.getElementById('nome-convidado_3').value.trim();
             const nome4 = document.getElementById('nome-convidado_4').value.trim();
 
-            if (nome1 === "") {
-                alert("Por favor, preencha pelo menos o primeiro nome.");
+            if (idade1 === "") {
+                alert("Por favor, preencha a idade do primeiro convidado.");
                 return;
             }
 
-            // IDs do Google Forms — nomes existentes
+            // IDs do Google Forms — atualize cada par
+            // A primeira constante de cada grupo deve ser o ID do campo "Nome do convidado X"
+            // e a segunda constante deve ser o ID do campo "Idade do convidado X".
+            // Se no seu formulário os valores estiverem trocados (idade aparecendo na coluna de
+            // nome), basta inverter os dois valores abaixo. Você encontra o ID inspecionando o
+            // elemento <input> do formulário (procure por "entry." no atributo name).
             const formID = "1FAIpQLSd_qJlNE8bEy44lnzlYFVeL3JVdvBr-v2FVCcvybbb7kCqpkQ";
-            const entry_nome1 = "entry.2134929628";
-            const entry_nome2 = "entry.746945272";
-            const entry_nome3 = "entry.1516924380";
-            const entry_nome4 = "entry.1575603338";
+            const entry_nome1 = "entry.2134929628";   // exemplo: campo "Nome 1"
+            const entry_idade1 = "entry.1266300583";  // exemplo: campo "Idade 1"
 
-            // ↓ Substitua pelos IDs reais dos novos campos "É criança?" que vai criar no Forms
-            const entry_crianca1 = "entry.1266300583";
-            const entry_crianca2 = "entry.890342780";
-            const entry_crianca3 = "entry.903520774";
-            const entry_crianca4 = "entry.1437445319";
+            const entry_nome2 = "entry.746945272";    // nome 2
+            const entry_idade2 = "entry.890342780";   // idade 2
+
+            const entry_nome3 = "entry.1516924380";   // nome 3
+            const entry_idade3 = "entry.903520774";   // idade 3
+
+            const entry_nome4 = "entry.1575603338";   // nome 4
+            const entry_idade4 = "entry.1437445319";  // idade 4
 
             const urlGoogle = `https://docs.google.com/forms/d/e/${formID}/formResponse?`
                 + `${entry_nome1}=${encodeURIComponent(nome1)}`
+                + `&${entry_idade1}=${encodeURIComponent(idade1)}`  // ordem não importa na URL,
+                                                                 // só cada par precisa estar correto
                 + `&${entry_nome2}=${encodeURIComponent(nome2)}`
+                + `&${entry_idade2}=${encodeURIComponent(idade2)}`
                 + `&${entry_nome3}=${encodeURIComponent(nome3)}`
+                + `&${entry_idade3}=${encodeURIComponent(idade3)}`
                 + `&${entry_nome4}=${encodeURIComponent(nome4)}`
-                + `&${entry_crianca1}=${encodeURIComponent(respostas.crianca1)}`
-                + `&${entry_crianca2}=${encodeURIComponent(respostas.crianca2)}`
-                + `&${entry_crianca3}=${encodeURIComponent(respostas.crianca3)}`
-                + `&${entry_crianca4}=${encodeURIComponent(respostas.crianca4)}`
+                + `&${entry_idade4}=${encodeURIComponent(idade4)}`
                 + `&submit=Submit`;
 
+            // DEBUG: mostra a URL montada no console para inspecionar os pares
+            console.log('Google form URL:', urlGoogle);
+
             // Monta mensagem do WhatsApp — linha por convidado
-            function linha(nome, crianca) {
+            function linha(nome, idade) {
                 if (!nome) return "";
-                const tipo = crianca === "Sim" ? "👧 criança" : crianca === "Não" ? "👤 adulto" : "❓ não informado";
-                return `\n• ${nome} — ${tipo}`;
+                const info = idade ? `${idade} anos` : "idade não informada";
+                return `\n• ${nome} — ${info}`;
             }
 
             const textoWhats =
                 `Olá! Confirmo presença na festa da Maitê! 🎉`
-                + linha(nome1, respostas.crianca1)
-                + linha(nome2, respostas.crianca2)
-                + linha(nome3, respostas.crianca3)
-                + linha(nome4, respostas.crianca4);
+                + linha(nome1, idade1)
+                + linha(nome2, idade2)
+                + linha(nome3, idade3)
+                + linha(nome4, idade4);
 
             const linkWhats = `https://wa.me/5521991259018?text=${encodeURIComponent(textoWhats)}`;
 
