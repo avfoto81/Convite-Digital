@@ -162,6 +162,25 @@
             border-color: #FFD700;
         }
 
+        .input-idade {
+            width: 65px;
+            padding: 10px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            background-color: #ffffff;
+            color: #505050;
+            font-size: 0.9rem;
+            font-family: 'Merriweather', serif;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .input-idade:focus {
+            border-color: #FFD700;
+        }
+
         /* BOTÕES SIM / NÃO */
         .grupo-crianca {
             display: flex;
@@ -197,7 +216,7 @@
             background-color: rgba(255, 215, 0, 0.15);
         }
 
-        .legenda-crianca {
+        .idade {
             font-size: 0.72rem;
             color: #b0a080;
             text-align: right;
@@ -279,9 +298,9 @@
 <body>
 
     <div class="container-imagem">
-        <img src="./convite-balao-rose.png" alt="Imagem de um balão dourado elegante" />
+        <img src="./convite_img_02.png" alt="Imagem de um balão dourado elegante" />
 
-        <div class="texto-sobreposto">
+        <!--<div class="texto-sobreposto">
             <h1>Maitê faz 12</h1>
             <p>Olá, venha comemorar comigo este dia especial!</p>
         </div>
@@ -291,7 +310,7 @@
             <p>Sítio das Zitas</p>
             <p>Estr. dos Bandeirantes, 23050 - Vargem Grande</p>
             <p>Para as crianças: Levar roupa de piscina</p>
-        </div>
+        </div> -->
 
         <section id="confirmacao">
             <h2>Confirme sua Presença</h2>
@@ -299,14 +318,13 @@
 
             <div id="form-confirmacao">
 
-                <p class="legenda-crianca">👶 É criança? &nbsp; Sim / Não</p>
+                <p class="idade">👶 Idade da criança</p>
 
                 <div class="linha-convidado">
                     <label for="nome-convidado">Convidado 1:</label>
                     <input type="text" id="nome-convidado" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                        <button class="btn-crianca sim" data-alvo="crianca1" type="button">Sim</button>
-                        <button class="btn-crianca nao" data-alvo="crianca1" type="button">Não</button>
+                        <input type="number" class="input-idade" id="idade1" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -314,8 +332,7 @@
                     <label for="nome-convidado_2">Convidado 2:</label>
                     <input type="text" id="nome-convidado_2" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                        <button class="btn-crianca sim" data-alvo="crianca2" type="button">Sim</button>
-                        <button class="btn-crianca nao" data-alvo="crianca2" type="button">Não</button>
+                         <input type="number" class="input-idade" id="idade2" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -323,8 +340,7 @@
                     <label for="nome-convidado_3">Convidado 3:</label>
                     <input type="text" id="nome-convidado_3" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                        <button class="btn-crianca sim" data-alvo="crianca3" type="button">Sim</button>
-                        <button class="btn-crianca nao" data-alvo="crianca3" type="button">Não</button>
+                         <input type="number" class="input-idade" id="idade3" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
@@ -332,8 +348,7 @@
                     <label for="nome-convidado_4">Convidado 4:</label>
                     <input type="text" id="nome-convidado_4" placeholder="Nome do convidado" />
                     <div class="grupo-crianca">
-                        <button class="btn-crianca sim" data-alvo="crianca4" type="button">Sim</button>
-                        <button class="btn-crianca nao" data-alvo="crianca4" type="button">Não</button>
+                         <input type="number" class="input-idade" id="idade4" placeholder="Idade" min="1" max="99" />
                     </div>
                 </div>
 
