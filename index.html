@@ -188,33 +188,7 @@
             flex-shrink: 0;
         }
 
-        .btn-crianca {
-            padding: 6px 10px;
-            border-radius: 20px;
-            border: 1px solid #FFD700;
-            background-color: transparent;
-            color: #a08040;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: background-color 0.2s, color 0.2s;
-            white-space: nowrap;
-        }
 
-        .btn-crianca.sim.ativo {
-            background-color: #4caf50;
-            color: #ffffff;
-            border-color: #4caf50;
-        }
-
-        .btn-crianca.nao.ativo {
-            background-color: #888;
-            color: #ffffff;
-            border-color: #888;
-        }
-
-        .btn-crianca:hover:not(.ativo) {
-            background-color: rgba(255, 215, 0, 0.15);
-        }
 
         .idade {
             font-size: 0.72rem;
@@ -269,6 +243,59 @@
         #btn-recusar:hover {
             border-color: #cc4444;
             color: #cc4444;
+        }
+
+        /* ================================================
+           ÁREA DE SUCESSO — aparece após confirmar
+        ================================================ */
+        #area-confirmado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 8px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #msg-sucesso {
+            font-size: 1rem;
+            color: #4caf50;
+            font-weight: bold;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* BOTÃO AGENDA — verde, visual diferente dos outros */
+        #btn-agenda {
+            width: 60%;
+            max-width: 400px;
+            padding: 12px;
+            border-radius: 20px;
+            border: 2px solid #4caf50;
+            background-color: transparent;
+            color: #4caf50;
+            font-size: 0.95rem;
+            font-family: 'Merriweather', serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        #btn-agenda:hover {
+            background-color: #4caf50;
+            color: #ffffff;
         }
 
         @media (max-width: 480px) {
@@ -360,6 +387,15 @@
                     ❌ Não poderei comparecer
                 </button>
 
+                <!-- Aparece somente após confirmar -->
+                <div id="area-confirmado" hidden>
+                    <p id="msg-sucesso">✅ Presença confirmada! Até lá! 🎉</p>
+                    <button id="btn-agenda" type="button">
+                        📅 Adicionar à minha agenda
+                    </button>
+                </div>
+
+
             </div>
         </section>
     </div>
@@ -376,10 +412,7 @@
     </footer>
 
     <script>
-        // ================================================
-        // LÓGICA DOS BOTÕES DE IDADE
-        // Guardar as idades das pessoas para enviar ao Google Forms
-        // ================================================
+
         // ================================================
         // BOTÃO CONFIRMAR
         // ================================================
@@ -396,9 +429,10 @@
             const nome3 = document.getElementById('nome-convidado_3').value.trim();
             const nome4 = document.getElementById('nome-convidado_4').value.trim();
 
-            if (idade1 === "") {
-                alert("Por favor, preencha a idade do primeiro convidado.");
+            if (nome1 === "") {
+                alert("Por favor, preencha o nome do primeiro convidado.");
                 return;
+
             }
 
             // IDs do Google Forms — nomes existentes
@@ -444,13 +478,38 @@
 
 
             // Envia para o Google Forms em segundo plano
-            fetch(urlGoogle, { mode: 'no-cors' }).then(() => {
-                alert("Presença confirmada com sucesso!");
-                window.location.href = linkWhats; // Direciona para o WhatsApp após salvar
-            }).catch(() => {
-                // Caso o fetch falhe, abre o forms em nova aba para garantir
-                window.open(urlGoogle, '_blank');
-            });
+            fetch(urlGoogle, { mode: 'no-cors' })
+                .then(() => {
+                    // Esconde os botões de confirmar e recusar
+                    document.getElementById('btn-confirmar').hidden = true;
+                    document.getElementById('btn-recusar').hidden = true;
+
+                    // Mostra área de sucesso com botão de agenda
+                    document.getElementById('area-confirmado').hidden = false;
+
+                    // Abre o WhatsApp em nova aba
+                    window.open(linkWhats, '_blank');
+                })
+                .catch(() => {
+                    // Se fetch falhar, executa o fluxo mesmo assim
+                    document.getElementById('btn-confirmar').hidden = true;
+                    document.getElementById('btn-recusar').hidden = true;
+                    document.getElementById('area-confirmado').hidden = false;
+                    window.open(linkWhats, '_blank');
+                });
+        });
+        // ================================================
+        // BOTÃO AGENDA — abre Google Calendar com evento pronto
+        // Data: 29/03/2026 às 12h30 (Brasília = UTC-3 → 15h30 UTC)
+        // ================================================
+        document.getElementById('btn-agenda').addEventListener('click', function () {
+            const linkAgenda = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                + '&text=🎉+Festa+da+Maitê+12+anos'
+                + '&dates=20260329T153000Z/20260329T213000Z'
+                + '&details=Festa+de+aniversário+da+Maitê!+Para+as+crianças:+levar+roupa+de+piscina+🎈'
+                + '&location=Estr.+dos+Bandeirantes,+23050+-+Vargem+Grande,+Rio+de+Janeiro';
+
+            window.open(linkAgenda, '_blank');
         });
 
         // ================================================
@@ -459,6 +518,7 @@
         document.getElementById('btn-recusar').addEventListener('click', function () {
             alert("Poxa, que pena que não poderá ir! Obrigado por avisar. 💛");
         });
+
     </script>
 
 </body>
